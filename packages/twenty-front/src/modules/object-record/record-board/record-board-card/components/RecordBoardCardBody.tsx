@@ -6,6 +6,7 @@ import { RecordBoardCardContext } from '@/object-record/record-board/record-boar
 import { recordBoardCardHoverPositionComponentState } from '@/object-record/record-board/record-board-card/states/recordBoardCardHoverPositionComponentState';
 import { RecordCardBodyContainer } from '@/object-record/record-card/components/RecordCardBodyContainer';
 import { visibleRecordFieldsComponentSelector } from '@/object-record/record-field/states/visibleRecordFieldsComponentSelector';
+import { isOnDemandField } from '@/object-record/record-field/on-demand/utils/isOnDemandField';
 import {
   FieldContext,
   type RecordUpdateHook,
@@ -33,6 +34,7 @@ export const RecordBoardCardBody = () => {
     fieldMetadataItemByFieldMetadataItemId,
     fieldDefinitionByFieldMetadataItemId,
     objectPermissionsByObjectMetadataId,
+    isOnDemandFieldsEnabled,
   } = useRecordIndexContextOrThrow();
 
   const useUpdateOneRecordHook: RecordUpdateHook = () => {
@@ -87,6 +89,8 @@ export const RecordBoardCardBody = () => {
                 recordId,
                 maxWidth: 156,
                 isLabelIdentifier: false,
+                isOnDemand:
+                  isOnDemandFieldsEnabled && isOnDemandField(fieldMetadataItem),
                 isRecordFieldReadOnly: isRecordFieldReadOnly({
                   isRecordReadOnly,
                   objectMetadataId: objectMetadataItem.id,

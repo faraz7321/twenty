@@ -7,6 +7,8 @@ import { useRecordCalendarCardMetadataFromPosition } from '@/object-record/recor
 import { recordCalendarCardHoverPositionComponentState } from '@/object-record/record-calendar/record-calendar-card/states/recordCalendarCardHoverPositionComponentState';
 import { getRecordCalendarCardInstanceIdPrefix } from '@/object-record/record-calendar/record-calendar-card/utils/getRecordCalendarCardInstanceIdPrefix';
 import { RecordInlineCellAnchoredPortal } from '@/object-record/record-inline-cell/components/RecordInlineCellAnchoredPortal';
+import { isOnDemandField } from '@/object-record/record-field/on-demand/utils/isOnDemandField';
+import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
 import { isDefined } from 'twenty-shared/utils';
 
 type RecordCalendarCardCellHoveredPortalProps = {
@@ -19,6 +21,7 @@ export const RecordCalendarCardCellHoveredPortal = ({
   calendarDay,
 }: RecordCalendarCardCellHoveredPortalProps) => {
   const { objectMetadataItem } = useRecordCalendarContextOrThrow();
+  const { isOnDemandFieldsEnabled } = useRecordIndexContextOrThrow();
 
   const recordCalendarCardHoverPosition = useAtomComponentStateValue(
     recordCalendarCardHoverPositionComponentState,
@@ -31,6 +34,10 @@ export const RecordCalendarCardCellHoveredPortal = ({
     !isDefined(recordCalendarCardHoverPosition) ||
     !isDefined(hoveredFieldMetadataItem)
   ) {
+    return null;
+  }
+
+  if (isOnDemandFieldsEnabled && isOnDemandField(hoveredFieldMetadataItem)) {
     return null;
   }
 

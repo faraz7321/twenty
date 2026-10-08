@@ -6,6 +6,7 @@ import { recordCalendarCardHoverPositionComponentState } from '@/object-record/r
 import { getRecordCalendarCardInstanceIdPrefix } from '@/object-record/record-calendar/record-calendar-card/utils/getRecordCalendarCardInstanceIdPrefix';
 import { RecordCardBodyContainer } from '@/object-record/record-card/components/RecordCardBodyContainer';
 import { visibleRecordFieldsComponentSelector } from '@/object-record/record-field/states/visibleRecordFieldsComponentSelector';
+import { isOnDemandField } from '@/object-record/record-field/on-demand/utils/isOnDemandField';
 import {
   FieldContext,
   type RecordUpdateHook,
@@ -55,6 +56,7 @@ export const RecordCalendarCardBody = ({
     fieldMetadataItemByFieldMetadataItemId,
     fieldDefinitionByFieldMetadataItemId,
     objectPermissionsByObjectMetadataId,
+    isOnDemandFieldsEnabled,
   } = useRecordIndexContextOrThrow();
 
   const visibleRecordFields = useAtomComponentSelectorValue(
@@ -100,6 +102,8 @@ export const RecordCalendarCardBody = ({
                 recordId,
                 maxWidth: 156,
                 isLabelIdentifier: false,
+                isOnDemand:
+                  isOnDemandFieldsEnabled && isOnDemandField(fieldMetadataItem),
                 isRecordFieldReadOnly: isRecordFieldReadOnly({
                   isRecordReadOnly,
                   objectMetadataId: objectMetadataItem.id,
