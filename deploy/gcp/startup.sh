@@ -31,6 +31,9 @@ $DOMAIN {
 CADDY
 cat > compose.proxy.yml <<'PROXY'
 services:
+  server:
+    healthcheck:
+      start_period: 10m
   caddy:
     image: caddy:2-alpine
     restart: always
