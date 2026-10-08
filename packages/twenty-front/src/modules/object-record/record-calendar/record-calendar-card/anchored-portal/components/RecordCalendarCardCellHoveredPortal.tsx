@@ -7,7 +7,7 @@ import { useRecordCalendarCardMetadataFromPosition } from '@/object-record/recor
 import { recordCalendarCardHoverPositionComponentState } from '@/object-record/record-calendar/record-calendar-card/states/recordCalendarCardHoverPositionComponentState';
 import { getRecordCalendarCardInstanceIdPrefix } from '@/object-record/record-calendar/record-calendar-card/utils/getRecordCalendarCardInstanceIdPrefix';
 import { RecordInlineCellAnchoredPortal } from '@/object-record/record-inline-cell/components/RecordInlineCellAnchoredPortal';
-import { isOnDemandField } from '@/object-record/record-field/on-demand/utils/isOnDemandField';
+import { getIsOnDemandFieldEnabled } from '@/object-record/record-field/on-demand/utils/getIsOnDemandFieldEnabled';
 import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
 import { isDefined } from 'twenty-shared/utils';
 
@@ -37,7 +37,12 @@ export const RecordCalendarCardCellHoveredPortal = ({
     return null;
   }
 
-  if (isOnDemandFieldsEnabled && isOnDemandField(hoveredFieldMetadataItem)) {
+  if (
+    getIsOnDemandFieldEnabled({
+      isOnDemandFieldsEnabled,
+      fieldMetadataItem: hoveredFieldMetadataItem,
+    })
+  ) {
     return null;
   }
 

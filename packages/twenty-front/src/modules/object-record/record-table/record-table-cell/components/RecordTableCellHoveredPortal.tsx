@@ -1,4 +1,4 @@
-import { isOnDemandField } from '@/object-record/record-field/on-demand/utils/isOnDemandField';
+import { getIsOnDemandFieldEnabled } from '@/object-record/record-field/on-demand/utils/getIsOnDemandFieldEnabled';
 import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
 import { TABLE_Z_INDEX } from '@/object-record/record-table/constants/TableZIndex';
 import { useRecordTableContextOrThrow } from '@/object-record/record-table/contexts/RecordTableContext';
@@ -27,9 +27,10 @@ export const RecordTableCellHoveredPortal = () => {
     : undefined;
 
   if (
-    isOnDemandFieldsEnabled &&
-    isDefined(fieldMetadataItem) &&
-    isOnDemandField(fieldMetadataItem)
+    getIsOnDemandFieldEnabled({
+      isOnDemandFieldsEnabled,
+      fieldMetadataItem,
+    })
   ) {
     return null;
   }

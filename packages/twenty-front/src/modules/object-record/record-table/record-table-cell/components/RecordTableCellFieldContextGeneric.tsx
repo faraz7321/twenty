@@ -2,7 +2,7 @@ import { getObjectPermissionsForObject } from '@/object-metadata/utils/getObject
 import { isLabelIdentifierField } from '@/object-metadata/utils/isLabelIdentifierField';
 import { isRecordFieldReadOnly } from '@/object-record/read-only/utils/isRecordFieldReadOnly';
 import { type RecordField } from '@/object-record/record-field/types/RecordField';
-import { isOnDemandField } from '@/object-record/record-field/on-demand/utils/isOnDemandField';
+import { getIsOnDemandFieldEnabled } from '@/object-record/record-field/on-demand/utils/getIsOnDemandFieldEnabled';
 import { FieldContext } from '@/object-record/record-field/ui/contexts/FieldContext';
 import { isFieldRelationManyToOne } from '@/object-record/record-field/ui/types/guards/isFieldRelationManyToOne';
 import { isFieldRelationOneToMany } from '@/object-record/record-field/ui/types/guards/isFieldRelationOneToMany';
@@ -131,8 +131,10 @@ export const RecordTableCellFieldContextGeneric = ({
             objectPermissionsByObjectMetadataId,
           }),
         isForbidden: !hasObjectReadPermissions,
-        isOnDemand:
-          isOnDemandFieldsEnabled && isOnDemandField(fieldMetadataItem),
+        isOnDemand: getIsOnDemandFieldEnabled({
+          isOnDemandFieldsEnabled,
+          fieldMetadataItem,
+        }),
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 import { getLinkToShowPage } from '@/object-metadata/utils/getLinkToShowPage';
 import { RecordChip } from '@/object-record/components/RecordChip';
 import { visibleRecordFieldsComponentSelector } from '@/object-record/record-field/states/visibleRecordFieldsComponentSelector';
-import { isOnDemandField } from '@/object-record/record-field/on-demand/utils/isOnDemandField';
+import { getIsOnDemandFieldEnabled } from '@/object-record/record-field/on-demand/utils/getIsOnDemandFieldEnabled';
 import { isFieldValueEmpty } from '@/object-record/record-field/ui/utils/isFieldValueEmpty';
 import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
 import { useOpenRecordFromIndexView } from '@/object-record/record-index/hooks/useOpenRecordFromIndexView';
@@ -124,10 +124,10 @@ export const RecordListRow = ({ recordId, rowRef }: RecordListRowProps) => {
         fieldDefinitionByFieldMetadataItemId[recordField.fieldMetadataItemId];
       const fieldMetadataItem =
         fieldMetadataItemByFieldMetadataItemId[recordField.fieldMetadataItemId];
-      const isOnDemand =
-        isOnDemandFieldsEnabled &&
-        isDefined(fieldMetadataItem) &&
-        isOnDemandField(fieldMetadataItem);
+      const isOnDemand = getIsOnDemandFieldEnabled({
+        isOnDemandFieldsEnabled,
+        fieldMetadataItem,
+      });
 
       if (
         !isDefined(fieldDefinition) ||

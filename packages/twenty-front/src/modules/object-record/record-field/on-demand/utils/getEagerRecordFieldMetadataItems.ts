@@ -1,5 +1,5 @@
 import { type FieldMetadataItem } from '@/object-metadata/types/FieldMetadataItem';
-import { isOnDemandField } from '@/object-record/record-field/on-demand/utils/isOnDemandField';
+import { getIsOnDemandFieldEnabled } from '@/object-record/record-field/on-demand/utils/getIsOnDemandFieldEnabled';
 import { filterDuplicatesById } from 'twenty-shared/utils';
 
 export const getEagerRecordFieldMetadataItems = <
@@ -18,7 +18,11 @@ export const getEagerRecordFieldMetadataItems = <
 }): TFieldMetadata[] =>
   [
     ...visibleFieldMetadataItems.filter(
-      (field) => !isOnDemandFieldsEnabled || !isOnDemandField(field),
+      (fieldMetadataItem) =>
+        !getIsOnDemandFieldEnabled({
+          isOnDemandFieldsEnabled,
+          fieldMetadataItem,
+        }),
     ),
     ...requiredFieldMetadataItems,
   ].filter(filterDuplicatesById);
